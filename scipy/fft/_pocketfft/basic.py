@@ -16,6 +16,9 @@ def c2c(forward, x, n=None, axis=-1, norm=None, overwrite_x=False,
                                   'supported by scipy.fft functions')
     tmp = _asfarray(x)
     overwrite_x = overwrite_x or _datacopied(tmp, x)
+    if np.isrealobj(tmp):
+        # The real input will be copied to a free complex array in c2c_internal
+        overwrite_x = True
     norm = _normalization(norm, forward)
     workers = _workers(workers)
 
